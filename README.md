@@ -1,16 +1,19 @@
-# pi-gen
+# XBox pi-gen
 
-_Tool used to create the raspberrypi.org Raspbian images_
+_Tool used to create the XBox images, adapted from raspberrypi.org pi-gen_
 
-
-## Dependencies
+## Setup
 
 pi-gen runs on Debian based operating systems. Currently it is only supported on
-either Debian Buster or Ubuntu Xenial and is known to have issues building on
-earlier releases of these systems. On other Linux distributions it may be possible
-to use the Docker build described below.
+either Debian Buster or Ubuntu Xenial. As such we've created a Vagrantfile to
+execute builds in the correct environment regardless of the host operating
+system.
 
-To install the required dependencies for pi-gen you should run:
+## Vagrant Environment
+
+### Dependencies
+
+Vagrant sets up several dependencies prior to running the build script:
 
 ```bash
 apt-get install coreutils quilt parted qemu-user-static debootstrap zerofree zip \
@@ -19,6 +22,35 @@ dosfstools bsdtar libcap2-bin grep rsync xz-utils file git curl bc
 
 The file `depends` contains a list of tools needed.  The format of this
 package is `<tool>[:<debian-package>]`.
+
+This first iteration uses the Docker build option, `build-docker.sh` as there
+were a number of issues attempting to run the `build.sh` script directly.
+
+Unfortunately `build-docker.sh` did not work directly on the host system, but
+instead had silent failures due to a lack of host `binfmt-support`. See
+[pi-gen's documentation](https://github.com/RPi-Distro/pi-gen#docker-build)
+for more detail on this.
+
+### Execution
+
+To get started, [install Vagrant on the host machine]
+(https://www.vagrantup.com/downloads.html).
+
+1. Run `vagrant up` to launch the Vagrant instance. On first run this will 
+create the necessary Vagrant instance. 
+2. Execute `vagrant ssh` to enter the VM.
+3. Vagrant syncs the surrounding directory, `cd /vagrant`
+4. `./build-docker.sh` (this will take a while)
+5. Successful builds will be placed in `deploy`
+
+
+### Notes
+
+* Build failures are common, notably when porting shell scripts
+* See [Docker Build][docker build] for more information on building in Docker
+* The `config` file controls basics like the initial WiFi password and SSID
+the device will attempt to connect to on boot. See [config][config] for
+detailed information on the variables that can be set.
 
 
 ## Config
@@ -326,14 +358,16 @@ follows:
 # Troubleshooting
 
 ## `64 Bit Systems`
-Please note there is currently an issue when compiling with a 64 Bit OS. See https://github.com/RPi-Distro/pi-gen/issues/271
+Please note there is currently an issue when compiling with a 64 Bit OS. See https://github.com/RPi-Distro/pi-gen/issues/271.
+Docker is currently running an `i386` image to mitigate this issue.
 
 ## `binfmt_misc`
 
 Linux is able execute binaries from other architectures, meaning that it should be
 possible to make use of `pi-gen` on an x86_64 system, even though it will be running
 ARM binaries. This requires support from the [`binfmt_misc`](https://en.wikipedia.org/wiki/Binfmt_misc)
-kernel module.
+kernel module. This kernel module is not natively present on OS X which is the primary reason
+for using Docker.
 
 You may see the following error:
 

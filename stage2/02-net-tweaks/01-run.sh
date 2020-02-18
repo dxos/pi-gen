@@ -21,6 +21,8 @@ cat >> "${ROOTFS_DIR}/etc/wpa_supplicant/wpa_supplicant.conf" << EOL
 network={
 	ssid="${WPA_ESSID}"
 	key_mgmt=NONE
+  id_str="0"
+  priority=100	
 }
 EOL
 fi
