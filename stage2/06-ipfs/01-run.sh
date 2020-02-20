@@ -17,5 +17,9 @@ on_chroot << EOF
   echo "Installing IPFS..."
   cd ${PROJECT_DIR}
 
-  # TODO: port IPFS install script
+	git clone https://github.com/claudiobizzotto/ipfs-rpi
+
+	cd ${PROJECT_DIR}/ipfs-rpi
+
+	./install v0.4.21
 EOF

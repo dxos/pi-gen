@@ -26,7 +26,7 @@ on_chroot << EOF
 
 	tar zxvf /tmp/nodejs.tgz.$$
 
-	chown -R root:root node*
+	# chown -R root:root node*
 
 	mv node-v${NODE_VERSION}-linux-${MACH}/bin/* /usr/local/bin/
 

@@ -16,7 +16,7 @@ on_chroot << EOF
   curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 
   echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-  apt-get update && apt-get install --no-install-recommends yarn
+  sudo apt-get update && sudo apt-get install yarn
 
   echo "home dir is"
   echo 'export PATH=$PATH:$HOME_DIR/.yarn/bin' >> $HOME_DIR/.profile
