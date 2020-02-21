@@ -7,7 +7,6 @@
 # TODO: universal conf (cameron)
 CONF_DIR=/home/${FIRST_USER_NAME}/.xbox/installed
 PROJECT_DIR=/home/${FIRST_USER_NAME}
-HOME_DIR=/home/${FIRST_USER_NAME}
 
 on_chroot << EOF
   echo "Installing Yarn..."
@@ -19,10 +18,10 @@ on_chroot << EOF
   sudo apt-get update && sudo apt-get install yarn
 
   echo "home dir is"
-  echo 'export PATH=$PATH:$HOME_DIR/.yarn/bin' >> $HOME_DIR/.profile
+  echo 'export PATH=$PATH:$PROJECT_DIR/.yarn/bin' >> $PROJECT_DIR/.profile
 
   # Slow networks often time out during yarn install; increasing the max network-timeout helps.
-  echo "network-timeout 600000" >> $HOME_DIR/.yarnrc
+  echo "network-timeout 600000" >> $PROJECT_DIR/.yarnrc
 
   touch ${CONF_DIR}/install_yarn
   echo "OK"

@@ -26,6 +26,7 @@ EOF
 if [ "${USE_QEMU}" = "1" ]; then
 	echo "enter QEMU mode"
 	install -m 644 files/90-qemu.rules "${ROOTFS_DIR}/etc/udev/rules.d/"
+	install -m 644 files/10-debug-connection.rules "${ROOTFS_DIR}/etc/udev/rules.d/"
 	on_chroot << EOF
 systemctl disable resize2fs_once
 EOF

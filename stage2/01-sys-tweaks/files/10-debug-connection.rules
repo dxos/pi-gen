@@ -1,0 +1,5 @@
+# When an FTDI serial TTL-232 USB cable is plugged in open a login terminal
+# to provide a simple hardwired way to debug the system. A host on the other
+# end of the connection can log in and get a shell.
+# The specific cable used can be obtained from https://www.adafruit.com/product/70
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", SYMLINK+="ttyDebug%n", RUN+="/bin/sh -c '/sbin/agetty ttyDebug%n 115200'"
