@@ -14,8 +14,11 @@ on_chroot << EOF
 
   git clone https://github.com/dxos/dashboard.git
 
-  # TODO(burdon): Build.
-  sudo yarn install
+  cd dashboard
+
+  chown -R dxos-user:dxos-user .
+
+  yarn install
 
   touch ${CONF_DIR}/install_dashboard
   echo "OK"

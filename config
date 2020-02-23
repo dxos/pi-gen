@@ -1,0 +1,19 @@
+TARGET_HOSTNAME=xbox
+
+STAGE_LIST='stage0 stage1 stage2'
+
+FIRST_USER_NAME=${FIRST_USER_NAME:-dxos-user}
+FIRST_USER_PASS=${FIRST_USER_PASS:-kildall}
+
+WPA_ESSID=change_me_to_your_ssid
+WPA_PASSWORD=change_me_to_your_pw
+
+ENABLE_SSH=1
+
+# LOCALE_DEFAULT=en_US.UTF-8
+# KEYBOARD_KEYMAP=us
+# KEYBOARD_LAYOUT=English (US)
+# TIMEZONE_DEFAULT=US/Pacific
+
+IMG_VERSION=v0.0.1
+IMG_NAME=xbox-rpi-arm7l-v0.0.1
